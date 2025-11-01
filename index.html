@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casino Craps</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #004b23 0%, #012b17 60%, #00150a 100%);
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .table {
+      background: rgba(0, 0, 0, 0.35);
+      border: 4px solid #0f9d58;
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 700px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 2rem;
+    }
+
+    .bankroll {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .bankroll input {
+      flex: 1 1 140px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.3s ease;
+      background: linear-gradient(135deg, #0f9d58, #24c16b);
+      color: #052911;
+      flex: 1 1 150px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(20, 180, 100, 0.35);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #fbbc04, #ffe082);
+    }
+
+    button.danger {
+      background: linear-gradient(135deg, #db4437, #ff6f60);
+      color: #fff3f3;
+    }
+
+    .status {
+      margin: 24px 0 16px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      padding: 18px;
+      line-height: 1.6;
+    }
+
+    .dice {
+      font-size: 3rem;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 12px;
+      min-height: 3rem;
+    }
+
+    .history {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.95rem;
+    }
+
+    .history h2 {
+      margin-top: 0;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+
+    .history ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .history li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .history li:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 24px 12px;
+      }
+
+      .table {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="table" aria-live="polite">
+    <h1>Casino Craps</h1>
+    <section class="bankroll">
+      <div><strong>Bankroll:</strong> $<span id="bankroll">200</span></div>
+      <label for="betAmount" class="sr-only">Bet amount</label>
+      <input
+        type="number"
+        id="betAmount"
+        min="1"
+        step="1"
+        value="10"
+        aria-label="Pass line bet amount"
+      />
+      <div class="controls">
+        <button id="placeBet">Place Pass Line Bet</button>
+        <button id="rollButton" class="secondary">Roll Dice</button>
+        <button id="resetButton" class="danger">Reset Table</button>
+      </div>
+    </section>
+
+    <section class="status">
+      <div class="dice" id="dice"></div>
+      <div><strong>Point:</strong> <span id="point">—</span></div>
+      <div><strong>Current Bet:</strong> $<span id="currentBet">0</span></div>
+      <p id="message">Place a pass line bet to start a round.</p>
+    </section>
+
+    <section class="history" aria-live="polite">
+      <h2>Roll History</h2>
+      <ul id="historyList"></ul>
+    </section>
+  </main>
+
+  <script>
+    const diceElement = document.getElementById("dice");
+    const pointElement = document.getElementById("point");
+    const bankrollElement = document.getElementById("bankroll");
+    const currentBetElement = document.getElementById("currentBet");
+    const messageElement = document.getElementById("message");
+    const historyList = document.getElementById("historyList");
+    const placeBetButton = document.getElementById("placeBet");
+    const rollButton = document.getElementById("rollButton");
+    const resetButton = document.getElementById("resetButton");
+    const betInput = document.getElementById("betAmount");
+
+    const diceFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+
+    let bankroll = 200;
+    let currentBet = 0;
+    let point = null;
+    let phase = "come-out"; // other possible value: "point"
+
+    const formatter = new Intl.NumberFormat(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+
+    function updateDisplay() {
+      bankrollElement.textContent = formatter.format(bankroll);
+      currentBetElement.textContent = formatter.format(currentBet);
+      pointElement.textContent = point ? point : "—";
+    }
+
+    function appendHistoryEntry(text) {
+      const listItem = document.createElement("li");
+      listItem.textContent = text;
+      historyList.prepend(listItem);
+      while (historyList.children.length > 12) {
+        historyList.removeChild(historyList.lastChild);
+      }
+    }
+
+    function rollDice() {
+      return {
+        die1: Math.floor(Math.random() * 6) + 1,
+        die2: Math.floor(Math.random() * 6) + 1,
+      };
+    }
+
+    function renderDice(die1, die2) {
+      diceElement.innerHTML = `<span>${diceFaces[die1 - 1]}</span><span>${diceFaces[die2 - 1]}</span>`;
+    }
+
+    function handleWin() {
+      bankroll += currentBet * 2;
+      appendHistoryEntry(`Win! Paid $${formatter.format(currentBet)}.`);
+      messageElement.textContent = `You win! Collect $${formatter.format(currentBet)}.`;
+      currentBet = 0;
+      point = null;
+      phase = "come-out";
+      updateDisplay();
+    }
+
+    function handleLoss() {
+      appendHistoryEntry(`Seven out. Lost $${formatter.format(currentBet)}.`);
+      messageElement.textContent = `You lose $${formatter.format(currentBet)}. Place a new bet to start again.`;
+      currentBet = 0;
+      point = null;
+      phase = "come-out";
+      updateDisplay();
+    }
+
+    placeBetButton.addEventListener("click", () => {
+      if (phase !== "come-out") {
+        messageElement.textContent = "You already have a point. Finish the round before betting again.";
+        return;
+      }
+
+      const amount = Number.parseInt(betInput.value, 10);
+      if (!Number.isInteger(amount) || amount <= 0) {
+        messageElement.textContent = "Enter a positive whole number for your bet.";
+        return;
+      }
+
+      if (amount > bankroll) {
+        messageElement.textContent = "You cannot bet more than your bankroll.";
+        return;
+      }
+
+      currentBet += amount;
+      bankroll -= amount;
+      messageElement.textContent = `Pass line bet of $${formatter.format(amount)} placed. Roll the dice!`;
+      appendHistoryEntry(`Bet $${formatter.format(amount)} on the pass line.`);
+      updateDisplay();
+    });
+
+    rollButton.addEventListener("click", () => {
+      if (currentBet <= 0) {
+        messageElement.textContent = "Place a pass line bet before you roll.";
+        return;
+      }
+
+      const { die1, die2 } = rollDice();
+      const total = die1 + die2;
+      renderDice(die1, die2);
+
+      appendHistoryEntry(`Rolled ${total} (${die1} + ${die2}).`);
+
+      if (phase === "come-out") {
+        if (total === 7 || total === 11) {
+          handleWin();
+        } else if ([2, 3, 12].includes(total)) {
+          handleLoss();
+        } else {
+          point = total;
+          phase = "point";
+          messageElement.textContent = `Point is ${point}. Roll again—hit ${point} before a 7 to win.`;
+          updateDisplay();
+        }
+        return;
+      }
+
+      if (phase === "point") {
+        if (total === point) {
+          handleWin();
+        } else if (total === 7) {
+          handleLoss();
+        } else {
+          messageElement.textContent = `The point is ${point}. Keep rolling!`;
+        }
+      }
+    });
+
+    resetButton.addEventListener("click", () => {
+      bankroll = 200;
+      currentBet = 0;
+      point = null;
+      phase = "come-out";
+      diceElement.textContent = "";
+      historyList.innerHTML = "";
+      messageElement.textContent = "Table reset. Place a pass line bet to start.";
+      updateDisplay();
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>
