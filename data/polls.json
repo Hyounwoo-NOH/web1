@@ -1,0 +1,39 @@
+{
+  "polls": [
+    {
+      "id": "2023-11-regular-round",
+      "year": 2023,
+      "month": 11,
+      "title": "11월 정기 라운드 결과",
+      "description": "11월 정기 라운드 일정은 투표를 통해 결정되었습니다.",
+      "deadline": "2023-10-25",
+      "status": "closed",
+      "allowMultiple": false,
+      "options": [
+        { "id": "2023-11-18-am", "label": "11월 18일(토) 오전", "votes": 21 },
+        { "id": "2023-11-19-am", "label": "11월 19일(일) 오전", "votes": 13 },
+        { "id": "2023-11-25-am", "label": "11월 25일(토) 오전", "votes": 7 }
+      ],
+      "resultSummary": "11월 정기 라운드는 11월 18일(토) 오전 티오프가 확정되었습니다.",
+      "banner": false
+    },
+    {
+      "id": "2023-12-holiday-round",
+      "year": 2023,
+      "month": 12,
+      "title": "12월 송년 라운드 일정 조사",
+      "description": "12월 송년 라운드 일정을 위한 사전 조사를 진행합니다. 가능한 일정을 모두 선택해주세요.",
+      "deadline": "2023-12-08",
+      "status": "open",
+      "allowMultiple": true,
+      "options": [
+        { "id": "2023-12-09", "label": "12월 9일(토) 오전", "votes": 9 },
+        { "id": "2023-12-10", "label": "12월 10일(일) 오후", "votes": 6 },
+        { "id": "2023-12-16", "label": "12월 16일(토) 오전", "votes": 14 },
+        { "id": "2023-12-23", "label": "12월 23일(토) 오전", "votes": 5 }
+      ],
+      "resultSummary": null,
+      "banner": true
+    }
+  ]
+}

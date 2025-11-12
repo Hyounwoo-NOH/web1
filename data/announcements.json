@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": "notice-001",
+      "title": "11월 정기 모임 안내",
+      "category": "공지사항",
+      "author": "운영진",
+      "publishedAt": "2023-10-28",
+      "content": "11월 정기 모임은 11월 18일(토) 오전 8시 티오프 예정입니다. 자세한 동반자 및 조 배정은 추후 공지될 예정입니다.",
+      "bannerSlot": 1
+    },
+    {
+      "id": "poll-001",
+      "title": "12월 송년 라운드 일정 투표 안내",
+      "category": "투표 안내",
+      "author": "운영진",
+      "publishedAt": "2023-11-02",
+      "content": "12월 송년 라운드 일정을 결정하기 위한 투표가 진행중입니다. 12월 8일까지 참여해주세요.",
+      "bannerSlot": 2
+    },
+    {
+      "id": "gallery-001",
+      "title": "10월 월례회 스케치",
+      "category": "사진첩",
+      "author": "운영진",
+      "publishedAt": "2023-10-21",
+      "content": "10월 월례회 사진이 업로드 되었습니다. 사진첩 메뉴에서 확인해주세요.",
+      "bannerSlot": null
+    },
+    {
+      "id": "notice-002",
+      "title": "신규 회원 환영",
+      "category": "공지사항",
+      "author": "운영진",
+      "publishedAt": "2023-09-30",
+      "content": "이번 달 새로 가입하신 회원 여러분 환영합니다!",
+      "bannerSlot": null
+    }
+  ]
+}
