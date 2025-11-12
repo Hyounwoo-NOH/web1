@@ -1,355 +1,1654 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Casino Craps</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-    }
-
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top, #004b23 0%, #012b17 60%, #00150a 100%);
-      color: #f5f5f5;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .table {
-      background: rgba(0, 0, 0, 0.35);
-      border: 4px solid #0f9d58;
-      border-radius: 24px;
-      padding: 32px;
-      max-width: 700px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 0;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-size: 2rem;
-    }
-
-    .bankroll {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .bankroll input {
-      flex: 1 1 140px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      font-size: 1rem;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.3s ease;
-      background: linear-gradient(135deg, #0f9d58, #24c16b);
-      color: #052911;
-      flex: 1 1 150px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(20, 180, 100, 0.35);
-    }
-
-    button:active {
-      transform: translateY(1px);
-      box-shadow: none;
-    }
-
-    button.secondary {
-      background: linear-gradient(135deg, #fbbc04, #ffe082);
-    }
-
-    button.danger {
-      background: linear-gradient(135deg, #db4437, #ff6f60);
-      color: #fff3f3;
-    }
-
-    .status {
-      margin: 24px 0 16px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 16px;
-      padding: 18px;
-      line-height: 1.6;
-    }
-
-    .dice {
-      font-size: 3rem;
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 12px;
-      min-height: 3rem;
-    }
-
-    .history {
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 16px;
-      padding: 16px;
-      max-height: 200px;
-      overflow-y: auto;
-      font-size: 0.95rem;
-    }
-
-    .history h2 {
-      margin-top: 0;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      opacity: 0.75;
-    }
-
-    .history ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .history li {
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .history li:last-child {
-      border-bottom: none;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 24px 12px;
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VEGA Golf 모임 허브</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --brand-blue: #0050b3;
+        --brand-orange: #ff6a00;
+        --brand-green: #2a9d8f;
+        --brand-dark: #0c233d;
+        --surface: #f8fafc;
+        --border: rgba(12, 35, 61, 0.1);
       }
 
-      .table {
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Nanum Gothic", "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #f0f4ff 0%, #d5e3ff 50%, #fef6e4 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 24px;
+        color: var(--brand-dark);
+      }
+
+      .app-background {
+        display: grid;
+        place-items: center;
+        width: min(420px, 100%);
+      }
+
+      .phone-frame {
+        position: relative;
+        width: 100%;
+        padding: 36px 18px 48px;
+        background: #111;
+        border-radius: 36px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .phone-frame::before,
+      .phone-frame::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #000;
+        border-radius: 999px;
+      }
+
+      .phone-frame::before {
+        top: 12px;
+        width: 120px;
+        height: 8px;
+      }
+
+      .phone-frame::after {
+        bottom: 12px;
+        width: 60px;
+        height: 6px;
+      }
+
+      .screen {
+        background: url("https://images.unsplash.com/photo-1529931870842-5f1021f36c42?auto=format&fit=crop&w=750&q=80")
+          center / cover no-repeat;
+        border-radius: 26px;
+        overflow: hidden;
+        min-height: 640px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .view {
+        flex: 1 1 auto;
+        display: none;
+        padding: 24px 20px 100px;
+        backdrop-filter: blur(6px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.75) 65%, rgba(255, 255, 255, 0.6) 100%);
+        overflow-y: auto;
+      }
+
+      .view.active {
+        display: block;
+        animation: fadeIn 260ms ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 12px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
       }
 
       h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
       }
 
-      button {
-        flex: 1 1 100%;
+      h2 {
+        font-size: 1.35rem;
       }
-    }
-  </style>
-</head>
-<body>
-  <main class="table" aria-live="polite">
-    <h1>Casino Craps</h1>
-    <section class="bankroll">
-      <div><strong>Bankroll:</strong> $<span id="bankroll">200</span></div>
-      <label for="betAmount" class="sr-only">Bet amount</label>
-      <input
-        type="number"
-        id="betAmount"
-        min="1"
-        step="1"
-        value="10"
-        aria-label="Pass line bet amount"
-      />
-      <div class="controls">
-        <button id="placeBet">Place Pass Line Bet</button>
-        <button id="rollButton" class="secondary">Roll Dice</button>
-        <button id="resetButton" class="danger">Reset Table</button>
+
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin: 0 0 12px;
+        line-height: 1.55;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+      }
+
+      .primary-button,
+      .secondary-button,
+      .ghost-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border-radius: 999px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 12px 18px;
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #0050b3, #1976d2);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(25, 118, 210, 0.35);
+      }
+
+      .primary-button:active {
+        transform: translateY(1px);
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
+      }
+
+      .secondary-button {
+        background: #fff;
+        color: var(--brand-blue);
+        border: 1px solid rgba(0, 80, 179, 0.25);
+      }
+
+      .ghost-button {
+        background: rgba(255, 255, 255, 0.65);
+        color: var(--brand-blue);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .ghost-button:active,
+      .secondary-button:active {
+        transform: translateY(1px);
+      }
+
+      .login-card {
+        margin-top: 140px;
+        display: grid;
+        gap: 18px;
+        text-align: center;
+      }
+
+      .login-card h1 {
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+
+      .input-field {
+        display: grid;
+        gap: 6px;
+        text-align: left;
+      }
+
+      .input-field label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: rgba(12, 35, 61, 0.7);
+      }
+
+      .input-field input,
+      .input-field select,
+      .input-field textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(12, 35, 61, 0.15);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+      }
+
+      .input-field input:focus,
+      .input-field textarea:focus,
+      .input-field select:focus {
+        outline: 3px solid rgba(25, 118, 210, 0.2);
+      }
+
+      .banner-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .banner-card {
+        padding: 16px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(25, 118, 210, 0.92), rgba(0, 80, 179, 0.9));
+        color: #fff;
+        position: relative;
+        box-shadow: 0 12px 24px rgba(25, 118, 210, 0.2);
+        cursor: pointer;
+      }
+
+      .banner-card.orange {
+        background: linear-gradient(135deg, rgba(255, 138, 0, 0.95), rgba(255, 107, 53, 0.92));
+      }
+
+      .banner-card h3 {
+        margin-bottom: 4px;
+      }
+
+      .banner-card span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        opacity: 0.85;
+        letter-spacing: 0.06em;
+      }
+
+      .section-card {
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: 20px;
+        padding: 18px;
+        border: 1px solid rgba(12, 35, 61, 0.08);
+        box-shadow: 0 18px 30px rgba(12, 35, 61, 0.08);
+        margin-top: 16px;
+      }
+
+      .section-card + .section-card {
+        margin-top: 18px;
+      }
+
+      .section-card header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .section-card header h2 {
+        font-size: 1.2rem;
+      }
+
+      .poll-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        border-radius: 999px;
+      }
+
+      .poll-status.active {
+        background: rgba(42, 157, 143, 0.15);
+        color: var(--brand-green);
+      }
+
+      .poll-status.closed {
+        background: rgba(12, 35, 61, 0.12);
+        color: rgba(12, 35, 61, 0.75);
+      }
+
+      .poll-preview {
+        display: grid;
+        gap: 10px;
+        font-size: 0.95rem;
+      }
+
+      .poll-deadline {
+        font-weight: 700;
+        color: rgba(12, 35, 61, 0.6);
+      }
+
+      .slide-carousel {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+      }
+
+      .slide-card {
+        min-width: calc(100% - 32px);
+        background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.88) 100%);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: inset 0 0 0 1px rgba(25, 118, 210, 0.08), 0 12px 24px rgba(12, 35, 61, 0.1);
+        scroll-snap-align: start;
+      }
+
+      .slide-card h3 {
+        color: var(--brand-blue);
+      }
+
+      .carousel-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      .carousel-indicator button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(25, 118, 210, 0.2);
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .carousel-indicator button[aria-current="true"] {
+        background: var(--brand-blue);
+      }
+
+      .calendar {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid rgba(12, 35, 61, 0.08);
+      }
+
+      .calendar header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        text-align: center;
+        font-size: 0.85rem;
+      }
+
+      .calendar-grid span {
+        padding: 6px 0;
+        font-weight: 700;
+        color: rgba(12, 35, 61, 0.6);
+      }
+
+      .calendar-cell {
+        padding: 10px 0;
+        border-radius: 12px;
+        background: rgba(12, 35, 61, 0.04);
+        position: relative;
+        min-height: 52px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+
+      .calendar-cell.today {
+        background: rgba(25, 118, 210, 0.15);
+        color: var(--brand-blue);
+        font-weight: 700;
+      }
+
+      .calendar-cell .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .calendar-cell .dot.vote-result {
+        background: var(--brand-orange);
+      }
+
+      .calendar-cell .dot.deadline {
+        background: var(--brand-green);
+      }
+
+      .calendar-empty {
+        visibility: hidden;
+      }
+
+      .nav-grid {
+        position: absolute;
+        bottom: 18px;
+        left: 20px;
+        right: 20px;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .nav-button {
+        border-radius: 12px;
+        padding: 12px 6px;
+        border: none;
+        background: rgba(255, 255, 255, 0.78);
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: var(--brand-blue);
+        letter-spacing: -0.01em;
+        box-shadow: 0 10px 20px rgba(12, 35, 61, 0.08);
+        cursor: pointer;
+      }
+
+      .nav-button.active {
+        background: linear-gradient(135deg, #0050b3, #1976d2);
+        color: #fff;
+      }
+
+      .board-list,
+      .poll-list,
+      .gallery-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .board-item,
+      .poll-item,
+      .photo-card {
+        background: rgba(255, 255, 255, 0.88);
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(12, 35, 61, 0.08);
+        box-shadow: 0 12px 22px rgba(12, 35, 61, 0.08);
+      }
+
+      .board-item header,
+      .poll-item header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(25, 118, 210, 0.12);
+        color: var(--brand-blue);
+      }
+
+      .badge-admin {
+        padding: 4px 8px;
+        background: rgba(255, 138, 0, 0.12);
+        color: var(--brand-orange);
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.75rem;
+      }
+
+      .inline-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .option-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .option-card {
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(12, 35, 61, 0.12);
+        background: rgba(255, 255, 255, 0.88);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .option-card input {
+        width: 20px;
+        height: 20px;
+      }
+
+      .progress-bar {
+        position: relative;
+        width: 100%;
+        height: 10px;
+        background: rgba(12, 35, 61, 0.1);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, var(--brand-blue), #63a4ff);
+      }
+
+      .fab-button {
+        position: fixed;
+        right: 32px;
+        bottom: 120px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--brand-orange), #ff8c32);
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 16px 30px rgba(255, 138, 0, 0.3);
+      }
+
+      .fab-button.visible {
+        display: flex;
+      }
+
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      dialog {
+        border: none;
+        border-radius: 18px;
+        padding: 24px;
+        width: min(360px, 90vw);
+        background: #fff;
+        box-shadow: 0 24px 48px rgba(12, 35, 61, 0.25);
+      }
+
+      .modal-actions {
+        margin-top: 18px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 24px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px dashed rgba(12, 35, 61, 0.1);
+      }
+
+      .highlight {
+        outline: 3px solid rgba(25, 118, 210, 0.4);
+        transition: outline 0.3s ease;
+      }
+
+      .calendar-detail {
+        display: grid;
+        gap: 12px;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+        color: var(--brand-blue);
+        margin-bottom: 12px;
+        cursor: pointer;
+      }
+
+      .settings-list {
+        display: grid;
+        gap: 16px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid rgba(12, 35, 61, 0.08);
+        box-shadow: 0 12px 24px rgba(12, 35, 61, 0.08);
+      }
+
+      .settings-list h3 {
+        color: var(--brand-blue);
+      }
+
+      .settings-list p {
+        margin: 4px 0 0;
+        color: rgba(12, 35, 61, 0.75);
+      }
+
+      .status-bar {
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+      }
+
+      .status-bar span:last-child {
+        font-weight: 700;
+      }
+
+      @media (max-width: 540px) {
+        body {
+          padding: 12px;
+        }
+
+        .phone-frame {
+          padding: 32px 14px 42px;
+        }
+
+        .view {
+          padding: 18px 16px 100px;
+        }
+
+        .fab-button {
+          right: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-background">
+      <div class="phone-frame">
+        <div class="screen" role="application">
+          <div class="status-bar" aria-hidden="true">
+            <span id="statusDate"></span>
+            <span>VEGA</span>
+          </div>
+          <section id="loginView" class="view active" aria-labelledby="loginTitle">
+            <div class="login-card">
+              <h1 id="loginTitle">VEGA</h1>
+              <p>동호회원 전용 공간입니다. 사번과 골프존 별명을 입력해주세요.</p>
+              <form id="loginForm" class="login-form" novalidate>
+                <div class="input-field">
+                  <label for="employeeId">사번</label>
+                  <input id="employeeId" name="employeeId" type="text" autocomplete="username" required />
+                </div>
+                <div class="input-field">
+                  <label for="nickname">골프존 별명</label>
+                  <input id="nickname" name="nickname" type="text" autocomplete="off" required />
+                </div>
+                <button type="submit" class="primary-button" aria-label="로그인">
+                  로그인
+                </button>
+                <p id="loginError" role="alert" style="color: #c62828; min-height: 20px"></p>
+              </form>
+            </div>
+          </section>
+
+          <section id="mainView" class="view" aria-labelledby="mainTitle">
+            <h1 id="mainTitle">VEGA 소식</h1>
+            <p id="welcomeText"></p>
+            <div class="banner-grid" aria-label="주요 공지 배너">
+              <article
+                class="banner-card"
+                id="bannerSlot1"
+                tabindex="0"
+                role="button"
+                aria-label="공지사항 배너 1"
+              ></article>
+              <article
+                class="banner-card orange"
+                id="bannerSlot2"
+                tabindex="0"
+                role="button"
+                aria-label="공지사항 배너 2"
+              ></article>
+            </div>
+
+            <article class="section-card" id="pollHighlight" aria-live="polite">
+              <header>
+                <h2>이번 달 투표</h2>
+                <span id="pollStatus" class="poll-status"></span>
+              </header>
+              <div class="poll-preview">
+                <h3 id="pollTitle"></h3>
+                <p id="pollDescription"></p>
+                <p class="poll-deadline" id="pollDeadline"></p>
+                <div class="inline-actions">
+                  <button class="primary-button" id="openPollButton">투표 화면으로 이동</button>
+                  <button class="ghost-button" id="viewResultsButton">결과 보기</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="section-card" aria-live="polite">
+              <header>
+                <h2>월간 공지(PPTX)</h2>
+                <span id="currentNoticeTitle" class="tag">스와이프 가능</span>
+              </header>
+              <div class="slide-carousel" id="noticeCarousel" aria-label="월간 공지 슬라이드"></div>
+              <div class="carousel-indicator" id="noticeIndicators" role="tablist"></div>
+            </article>
+
+            <article class="section-card">
+              <header>
+                <h2>모임 캘린더</h2>
+                <button class="secondary-button" id="openCalendarDetail">상세보기</button>
+              </header>
+              <div class="calendar" aria-label="달력">
+                <header>
+                  <button class="ghost-button" id="prevMonth" aria-label="이전 달">◀</button>
+                  <strong id="calendarLabel"></strong>
+                  <button class="ghost-button" id="nextMonth" aria-label="다음 달">▶</button>
+                </header>
+                <div class="calendar-grid" id="calendarGrid" role="grid"></div>
+              </div>
+            </article>
+
+            <nav class="nav-grid" aria-label="주요 메뉴">
+              <button class="nav-button" data-view="mainView">웹</button>
+              <button class="nav-button" data-view="pollView">투표</button>
+              <button class="nav-button" data-view="boardView">게시판</button>
+              <button class="nav-button" data-view="galleryView">사진첩</button>
+              <button class="nav-button" data-view="settingsView">설정</button>
+            </nav>
+          </section>
+
+          <section id="boardView" class="view" aria-labelledby="boardTitle">
+            <button class="back-button" data-view="mainView">← 메인으로</button>
+            <header>
+              <h1 id="boardTitle">자유 게시판</h1>
+              <p>공지, 투표 안내, 사진첩 등록 등 전체 게시물을 확인하세요.</p>
+            </header>
+            <div id="boardList" class="board-list"></div>
+          </section>
+
+          <section id="pollView" class="view" aria-labelledby="pollTitleMain">
+            <button class="back-button" data-view="mainView">← 메인으로</button>
+            <header>
+              <h1 id="pollTitleMain">투표</h1>
+              <p>진행 중인 투표에 참여하고 종료된 투표 결과를 확인하세요.</p>
+            </header>
+            <div id="pollList" class="poll-list"></div>
+          </section>
+
+          <section id="pollDetailView" class="view" aria-labelledby="pollDetailTitle">
+            <button class="back-button" data-view="pollView">← 투표 목록으로</button>
+            <header>
+              <h1 id="pollDetailTitle"></h1>
+              <div id="pollDetailStatus" class="poll-status"></div>
+              <p id="pollDetailDescription"></p>
+            </header>
+            <form id="pollVoteForm" class="option-list"></form>
+            <div class="inline-actions">
+              <button class="primary-button" id="submitVoteButton">투표하기</button>
+              <button class="ghost-button" id="viewPollResultButton">결과 보기</button>
+            </div>
+            <section id="pollResults" aria-live="polite" style="margin-top: 18px"></section>
+          </section>
+
+          <section id="calendarDetailView" class="view" aria-labelledby="calendarDetailTitle">
+            <button class="back-button" data-view="mainView">← 메인으로</button>
+            <header>
+              <h1 id="calendarDetailTitle">캘린더 상세</h1>
+              <p>모든 투표 일정과 결과를 한눈에 확인하세요.</p>
+            </header>
+            <div id="calendarEvents" class="board-list"></div>
+          </section>
+
+          <section id="galleryView" class="view" aria-labelledby="galleryTitle">
+            <button class="back-button" data-view="mainView">← 메인으로</button>
+            <header>
+              <h1 id="galleryTitle">사진첩</h1>
+              <p>최근 모임 순간을 모아두었어요.</p>
+            </header>
+            <div id="galleryGrid" class="gallery-grid"></div>
+          </section>
+
+          <section id="settingsView" class="view" aria-labelledby="settingsTitle">
+            <button class="back-button" data-view="mainView">← 메인으로</button>
+            <header>
+              <h1 id="settingsTitle">설정</h1>
+              <p>관리자 전용 기능과 데이터 연동 방법 안내입니다.</p>
+            </header>
+            <div class="settings-list">
+              <div>
+                <h3>데이터 연동 폴더</h3>
+                <p>/data 폴더에 있는 Excel → JSON 데이터 파일을 업데이트 하면 서비스가 자동으로 반영합니다.</p>
+                <p>members.json, announcements.json, polls.json, monthly_slides.json, calendar_events.json 파일을 유지해주세요.</p>
+              </div>
+              <div>
+                <h3>관리자 배너 제어</h3>
+                <p>게시판에서 공지를 선택 후 "배너 지정" 버튼을 누르면 메인 배너가 업데이트됩니다.</p>
+              </div>
+              <div>
+                <h3>투표 생성</h3>
+                <p>투표 화면 우측 하단 + 버튼을 통해 새로운 투표를 생성하고 배너 활성화 여부를 선택할 수 있습니다.</p>
+              </div>
+              <div>
+                <h3>로그아웃</h3>
+                <button class="secondary-button" id="logoutButton">로그아웃</button>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="status">
-      <div class="dice" id="dice"></div>
-      <div><strong>Point:</strong> <span id="point">—</span></div>
-      <div><strong>Current Bet:</strong> $<span id="currentBet">0</span></div>
-      <p id="message">Place a pass line bet to start a round.</p>
-    </section>
+    <button id="pollFab" class="fab-button" type="button" title="투표 생성">+</button>
 
-    <section class="history" aria-live="polite">
-      <h2>Roll History</h2>
-      <ul id="historyList"></ul>
-    </section>
-  </main>
+    <dialog id="pollDialog">
+      <form method="dialog" id="pollForm">
+        <h2>새로운 투표 생성</h2>
+        <div class="input-field">
+          <label for="pollYear">년도</label>
+          <input type="number" id="pollYear" required min="2023" />
+        </div>
+        <div class="input-field">
+          <label for="pollMonth">월</label>
+          <input type="number" id="pollMonth" required min="1" max="12" />
+        </div>
+        <div class="input-field">
+          <label for="pollTitleInput">투표 제목</label>
+          <input type="text" id="pollTitleInput" required />
+        </div>
+        <div class="input-field">
+          <label for="pollDescriptionInput">설명</label>
+          <textarea id="pollDescriptionInput" rows="3" required></textarea>
+        </div>
+        <div class="input-field">
+          <label for="pollDeadlineInput">투표 마감일</label>
+          <input type="date" id="pollDeadlineInput" required />
+        </div>
+        <div class="input-field">
+          <label><input type="checkbox" id="pollAllowMultiple" /> 복수 선택 허용</label>
+        </div>
+        <div class="input-field" id="optionsContainer">
+          <label>투표 항목</label>
+          <div class="option-list" id="optionList"></div>
+          <button type="button" class="secondary-button" id="addOptionButton">항목 추가</button>
+        </div>
+        <div class="input-field">
+          <label><input type="checkbox" id="pollBannerToggle" /> 메인 투표 배너로 표시</label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="ghost-button" id="cancelPollButton">취소</button>
+          <button type="submit" class="primary-button">생성</button>
+        </div>
+      </form>
+    </dialog>
 
-  <script>
-    const diceElement = document.getElementById("dice");
-    const pointElement = document.getElementById("point");
-    const bankrollElement = document.getElementById("bankroll");
-    const currentBetElement = document.getElementById("currentBet");
-    const messageElement = document.getElementById("message");
-    const historyList = document.getElementById("historyList");
-    const placeBetButton = document.getElementById("placeBet");
-    const rollButton = document.getElementById("rollButton");
-    const resetButton = document.getElementById("resetButton");
-    const betInput = document.getElementById("betAmount");
+    <dialog id="messageDialog" aria-live="assertive">
+      <p id="messageDialogText"></p>
+      <div class="modal-actions">
+        <button type="button" class="primary-button" id="closeMessageButton">확인</button>
+      </div>
+    </dialog>
 
-    const diceFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-
-    let bankroll = 200;
-    let currentBet = 0;
-    let point = null;
-    let phase = "come-out"; // other possible value: "point"
-
-    const formatter = new Intl.NumberFormat(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-
-    function updateDisplay() {
-      bankrollElement.textContent = formatter.format(bankroll);
-      currentBetElement.textContent = formatter.format(currentBet);
-      pointElement.textContent = point ? point : "—";
-    }
-
-    function appendHistoryEntry(text) {
-      const listItem = document.createElement("li");
-      listItem.textContent = text;
-      historyList.prepend(listItem);
-      while (historyList.children.length > 12) {
-        historyList.removeChild(historyList.lastChild);
-      }
-    }
-
-    function rollDice() {
-      return {
-        die1: Math.floor(Math.random() * 6) + 1,
-        die2: Math.floor(Math.random() * 6) + 1,
+    <script>
+      const views = new Map();
+      const state = {
+        member: null,
+        data: {
+          members: [],
+          posts: [],
+          polls: [],
+          notices: [],
+          events: []
+        },
+        overrides: {
+          banners: JSON.parse(localStorage.getItem("vega:banners") || "{}"),
+          polls: JSON.parse(localStorage.getItem("vega:pollOverrides") || "[]"),
+          votes: JSON.parse(localStorage.getItem("vega:votes") || "{}")
+        },
+        calendar: {
+          monthOffset: 0
+        }
       };
-    }
 
-    function renderDice(die1, die2) {
-      diceElement.innerHTML = `<span>${diceFaces[die1 - 1]}</span><span>${diceFaces[die2 - 1]}</span>`;
-    }
+      const selectors = {
+        loginView: document.getElementById("loginView"),
+        mainView: document.getElementById("mainView"),
+        pollView: document.getElementById("pollView"),
+        pollDetailView: document.getElementById("pollDetailView"),
+        boardView: document.getElementById("boardView"),
+        galleryView: document.getElementById("galleryView"),
+        settingsView: document.getElementById("settingsView"),
+        calendarDetailView: document.getElementById("calendarDetailView"),
+        bannerSlot1: document.getElementById("bannerSlot1"),
+        bannerSlot2: document.getElementById("bannerSlot2"),
+        pollStatus: document.getElementById("pollStatus"),
+        pollTitle: document.getElementById("pollTitle"),
+        pollDescription: document.getElementById("pollDescription"),
+        pollDeadline: document.getElementById("pollDeadline"),
+        pollHighlight: document.getElementById("pollHighlight"),
+        openPollButton: document.getElementById("openPollButton"),
+        viewResultsButton: document.getElementById("viewResultsButton"),
+        noticeCarousel: document.getElementById("noticeCarousel"),
+        noticeIndicators: document.getElementById("noticeIndicators"),
+        currentNoticeTitle: document.getElementById("currentNoticeTitle"),
+        calendarGrid: document.getElementById("calendarGrid"),
+        calendarLabel: document.getElementById("calendarLabel"),
+        welcomeText: document.getElementById("welcomeText"),
+        boardList: document.getElementById("boardList"),
+        pollList: document.getElementById("pollList"),
+        pollDetailTitle: document.getElementById("pollDetailTitle"),
+        pollDetailStatus: document.getElementById("pollDetailStatus"),
+        pollDetailDescription: document.getElementById("pollDetailDescription"),
+        pollVoteForm: document.getElementById("pollVoteForm"),
+        pollResults: document.getElementById("pollResults"),
+        submitVoteButton: document.getElementById("submitVoteButton"),
+        viewPollResultButton: document.getElementById("viewPollResultButton"),
+        galleryGrid: document.getElementById("galleryGrid"),
+        calendarEvents: document.getElementById("calendarEvents"),
+        pollFab: document.getElementById("pollFab"),
+        pollDialog: document.getElementById("pollDialog"),
+        pollForm: document.getElementById("pollForm"),
+        optionList: document.getElementById("optionList"),
+        addOptionButton: document.getElementById("addOptionButton"),
+        cancelPollButton: document.getElementById("cancelPollButton"),
+        pollYear: document.getElementById("pollYear"),
+        pollMonth: document.getElementById("pollMonth"),
+        pollTitleInput: document.getElementById("pollTitleInput"),
+        pollDescriptionInput: document.getElementById("pollDescriptionInput"),
+        pollDeadlineInput: document.getElementById("pollDeadlineInput"),
+        pollAllowMultiple: document.getElementById("pollAllowMultiple"),
+        pollBannerToggle: document.getElementById("pollBannerToggle"),
+        pollFabButton: document.getElementById("pollFab"),
+        openCalendarDetail: document.getElementById("openCalendarDetail"),
+        prevMonth: document.getElementById("prevMonth"),
+        nextMonth: document.getElementById("nextMonth"),
+        logoutButton: document.getElementById("logoutButton"),
+        messageDialog: document.getElementById("messageDialog"),
+        messageDialogText: document.getElementById("messageDialogText"),
+        closeMessageButton: document.getElementById("closeMessageButton"),
+        statusDate: document.getElementById("statusDate")
+      };
 
-    function handleWin() {
-      bankroll += currentBet * 2;
-      appendHistoryEntry(`Win! Paid $${formatter.format(currentBet)}.`);
-      messageElement.textContent = `You win! Collect $${formatter.format(currentBet)}.`;
-      currentBet = 0;
-      point = null;
-      phase = "come-out";
-      updateDisplay();
-    }
+      const messageDialog = selectors.messageDialog;
 
-    function handleLoss() {
-      appendHistoryEntry(`Seven out. Lost $${formatter.format(currentBet)}.`);
-      messageElement.textContent = `You lose $${formatter.format(currentBet)}. Place a new bet to start again.`;
-      currentBet = 0;
-      point = null;
-      phase = "come-out";
-      updateDisplay();
-    }
-
-    placeBetButton.addEventListener("click", () => {
-      if (phase !== "come-out") {
-        messageElement.textContent = "You already have a point. Finish the round before betting again.";
-        return;
-      }
-
-      const amount = Number.parseInt(betInput.value, 10);
-      if (!Number.isInteger(amount) || amount <= 0) {
-        messageElement.textContent = "Enter a positive whole number for your bet.";
-        return;
-      }
-
-      if (amount > bankroll) {
-        messageElement.textContent = "You cannot bet more than your bankroll.";
-        return;
-      }
-
-      currentBet += amount;
-      bankroll -= amount;
-      messageElement.textContent = `Pass line bet of $${formatter.format(amount)} placed. Roll the dice!`;
-      appendHistoryEntry(`Bet $${formatter.format(amount)} on the pass line.`);
-      updateDisplay();
-    });
-
-    rollButton.addEventListener("click", () => {
-      if (currentBet <= 0) {
-        messageElement.textContent = "Place a pass line bet before you roll.";
-        return;
-      }
-
-      const { die1, die2 } = rollDice();
-      const total = die1 + die2;
-      renderDice(die1, die2);
-
-      appendHistoryEntry(`Rolled ${total} (${die1} + ${die2}).`);
-
-      if (phase === "come-out") {
-        if (total === 7 || total === 11) {
-          handleWin();
-        } else if ([2, 3, 12].includes(total)) {
-          handleLoss();
-        } else {
-          point = total;
-          phase = "point";
-          messageElement.textContent = `Point is ${point}. Roll again—hit ${point} before a 7 to win.`;
-          updateDisplay();
-        }
-        return;
-      }
-
-      if (phase === "point") {
-        if (total === point) {
-          handleWin();
-        } else if (total === 7) {
-          handleLoss();
-        } else {
-          messageElement.textContent = `The point is ${point}. Keep rolling!`;
+      function showMessage(text) {
+        selectors.messageDialogText.textContent = text;
+        if (!messageDialog.open) {
+          messageDialog.showModal();
         }
       }
-    });
 
-    resetButton.addEventListener("click", () => {
-      bankroll = 200;
-      currentBet = 0;
-      point = null;
-      phase = "come-out";
-      diceElement.textContent = "";
-      historyList.innerHTML = "";
-      messageElement.textContent = "Table reset. Place a pass line bet to start.";
-      updateDisplay();
-    });
+      selectors.closeMessageButton.addEventListener("click", () => messageDialog.close());
 
-    updateDisplay();
-  </script>
-</body>
+      const formatter = new Intl.DateTimeFormat("ko", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+
+      const monthFormatter = new Intl.DateTimeFormat("ko", {
+        year: "numeric",
+        month: "long"
+      });
+
+      const dayFormatter = new Intl.DateTimeFormat("ko", {
+        month: "long",
+        day: "numeric",
+        weekday: "short"
+      });
+
+      const numberFormatter = new Intl.NumberFormat("ko", { maximumFractionDigits: 0 });
+
+      function setStatusDate() {
+        const now = new Date();
+        selectors.statusDate.textContent = new Intl.DateTimeFormat("ko", {
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(now);
+      }
+
+      setStatusDate();
+      setInterval(setStatusDate, 60000);
+
+      function registerViews() {
+        document.querySelectorAll(".view").forEach((view) => {
+          views.set(view.id, view);
+        });
+      }
+
+      function showView(id) {
+        views.forEach((view) => view.classList.remove("active"));
+        const target = views.get(id);
+        if (target) {
+          target.classList.add("active");
+          target.scrollTop = 0;
+        }
+        updateNavButtons(id);
+        if (id === "pollView") {
+          selectors.pollFabButton.classList.toggle("visible", Boolean(state.member?.isAdmin));
+        } else {
+          selectors.pollFabButton.classList.remove("visible");
+        }
+      }
+
+      function updateNavButtons(activeId) {
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          const viewId = button.dataset.view;
+          button.classList.toggle("active", viewId === activeId);
+        });
+      }
+
+      document.querySelectorAll("[data-view]").forEach((button) => {
+        button.addEventListener("click", () => showView(button.dataset.view));
+      });
+
+      document.getElementById("loginForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const employeeId = event.target.employeeId.value.trim().toUpperCase();
+        const nickname = event.target.nickname.value.trim().toUpperCase();
+        const member = state.data.members.find(
+          (m) => m.employeeId.toUpperCase() === employeeId && m.nickname.toUpperCase() === nickname
+        );
+        if (!member) {
+          document.getElementById("loginError").textContent = "사번 또는 별명이 일치하지 않습니다.";
+          return;
+        }
+        state.member = member;
+        localStorage.setItem("vega:lastMember", JSON.stringify(member));
+        document.getElementById("loginError").textContent = "";
+        updateAfterLogin();
+        showView("mainView");
+      });
+
+      selectors.logoutButton.addEventListener("click", () => {
+        state.member = null;
+        localStorage.removeItem("vega:lastMember");
+        showView("loginView");
+      });
+
+      function updateAfterLogin() {
+        if (!state.member) return;
+        selectors.welcomeText.textContent = `${state.member.displayName}님 환영합니다! 최근 소식을 확인해주세요.`;
+        renderMainBanners();
+        renderPollHighlight();
+        renderSlides();
+        renderCalendar();
+        renderBoard();
+        renderPollList();
+        renderGallery();
+        renderCalendarEvents();
+      }
+
+      function resolveBanner(slot) {
+        const overrideId = state.overrides.banners[`slot${slot}`];
+        if (overrideId) {
+          return state.data.posts.find((post) => post.id === overrideId) || null;
+        }
+        return state.data.posts.find((post) => post.bannerSlot === slot) || null;
+      }
+
+      function renderMainBanners() {
+        const slots = [selectors.bannerSlot1, selectors.bannerSlot2];
+        slots.forEach((slotEl, index) => {
+          const slot = index + 1;
+          const post = resolveBanner(slot);
+          if (!post) {
+            slotEl.innerHTML = `<h3>배너 준비중</h3><p>관리자가 곧 업데이트할 예정입니다.</p>`;
+            slotEl.dataset.postId = "";
+            return;
+          }
+          slotEl.innerHTML = `
+            <span>${post.category}</span>
+            <h3>${post.title}</h3>
+            <p>${post.content.slice(0, 80)}${post.content.length > 80 ? "…" : ""}</p>
+            <small>${post.publishedAt}</small>
+          `;
+          slotEl.dataset.postId = post.id;
+        });
+      }
+
+      [selectors.bannerSlot1, selectors.bannerSlot2].forEach((slot) => {
+        slot.addEventListener("click", () => openPost(slot.dataset.postId));
+        slot.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPost(slot.dataset.postId);
+          }
+        });
+      });
+
+      function openPost(postId) {
+        if (!postId) return;
+        showView("boardView");
+        const target = document.querySelector(`[data-post-id="${postId}"]`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          target.classList.add("highlight");
+          setTimeout(() => target.classList.remove("highlight"), 1500);
+        }
+      }
+
+      function renderPollHighlight() {
+        const today = new Date();
+        const nowYear = today.getFullYear();
+        const nowMonth = today.getMonth() + 1;
+        let poll = null;
+        const override = state.overrides.polls.find((p) => p.banner);
+        if (override) {
+          poll = state.data.polls.find((p) => p.id === override.id);
+        }
+        if (!poll) {
+          poll = state.data.polls.find((p) => p.year === nowYear && p.month === nowMonth && p.banner !== false);
+        }
+        if (!poll) {
+          poll = state.data.polls.find((p) => p.status === "open") || state.data.polls[0];
+        }
+        if (!poll) {
+          selectors.pollHighlight.innerHTML = `<div class="empty-state">등록된 투표가 없습니다.</div>`;
+          selectors.openPollButton.disabled = true;
+          selectors.viewResultsButton.disabled = true;
+          return;
+        }
+        selectors.pollHighlight.dataset.pollId = poll.id;
+        selectors.pollTitle.textContent = poll.title;
+        selectors.pollDescription.textContent = poll.description;
+        selectors.pollDeadline.textContent = poll.deadline
+          ? `투표 마감일: ${poll.deadline}`
+          : poll.status === "closed"
+          ? "투표가 종료되었습니다."
+          : "상시 투표";
+        selectors.pollStatus.textContent = poll.status === "open" ? "진행 중" : "종료";
+        selectors.pollStatus.className = `poll-status ${poll.status === "open" ? "active" : "closed"}`;
+        selectors.openPollButton.textContent = poll.status === "open" ? "투표 참여하기" : "투표 상세 보기";
+        selectors.openPollButton.disabled = false;
+        selectors.viewResultsButton.disabled = poll.status !== "closed" && !poll.resultSummary;
+        selectors.openPollButton.onclick = () => openPollDetail(poll.id);
+        selectors.viewResultsButton.onclick = () => showPollResults(poll);
+      }
+
+      function renderSlides() {
+        const today = new Date();
+        const key = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+        const notice = state.data.notices.find((n) => n.month === key) || state.data.notices[0];
+        if (!notice) {
+          selectors.noticeCarousel.innerHTML = `<div class="empty-state">등록된 월간 공지가 없습니다.</div>`;
+          selectors.noticeIndicators.innerHTML = "";
+          selectors.currentNoticeTitle.textContent = "공지 준비중";
+          return;
+        }
+        selectors.currentNoticeTitle.textContent = notice.title;
+        selectors.noticeCarousel.innerHTML = "";
+        selectors.noticeIndicators.innerHTML = "";
+        notice.pages.forEach((page, index) => {
+          const article = document.createElement("article");
+          article.className = "slide-card";
+          article.innerHTML = `<h3>${page.heading}</h3><p>${page.body}</p>`;
+          selectors.noticeCarousel.appendChild(article);
+          const indicator = document.createElement("button");
+          indicator.setAttribute("aria-label", `${index + 1}번째 슬라이드 보기`);
+          if (index === 0) {
+            indicator.setAttribute("aria-current", "true");
+          }
+          indicator.addEventListener("click", () => {
+            selectors.noticeCarousel.scrollTo({
+              left: article.offsetLeft - selectors.noticeCarousel.offsetLeft,
+              behavior: "smooth"
+            });
+          });
+          selectors.noticeIndicators.appendChild(indicator);
+        });
+        selectors.noticeCarousel.onscroll = () => {
+          const index = Math.round(selectors.noticeCarousel.scrollLeft / selectors.noticeCarousel.clientWidth);
+          selectors.noticeIndicators.querySelectorAll("button").forEach((btn, idx) => {
+            if (idx === index) {
+              btn.setAttribute("aria-current", "true");
+            } else {
+              btn.removeAttribute("aria-current");
+            }
+          });
+        };
+      }
+
+      function getCalendarDate(offsetMonths = 0) {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth() + offsetMonths, 1);
+      }
+
+      function renderCalendar() {
+        const baseDate = getCalendarDate(state.calendar.monthOffset);
+        const year = baseDate.getFullYear();
+        const month = baseDate.getMonth();
+        selectors.calendarLabel.textContent = monthFormatter.format(baseDate);
+        const start = new Date(year, month, 1);
+        const end = new Date(year, month + 1, 0);
+        const firstDay = start.getDay();
+        const totalDays = end.getDate();
+        const today = new Date();
+        selectors.calendarGrid.innerHTML = "";
+        const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+        weekdays.forEach((day) => {
+          const span = document.createElement("span");
+          span.textContent = day;
+          selectors.calendarGrid.appendChild(span);
+        });
+        for (let i = 0; i < firstDay; i++) {
+          const empty = document.createElement("div");
+          empty.className = "calendar-empty";
+          selectors.calendarGrid.appendChild(empty);
+        }
+        for (let date = 1; date <= totalDays; date++) {
+          const cell = document.createElement("div");
+          cell.className = "calendar-cell";
+          cell.textContent = date;
+          const cellDate = new Date(year, month, date);
+          if (
+            cellDate.getFullYear() === today.getFullYear() &&
+            cellDate.getMonth() === today.getMonth() &&
+            cellDate.getDate() === today.getDate()
+          ) {
+            cell.classList.add("today");
+          }
+          const isoDate = cellDate.toISOString().split("T")[0];
+          const events = state.data.events.filter((event) => event.date === isoDate);
+          if (events.length > 0) {
+            events.forEach((event) => {
+              const dot = document.createElement("span");
+              dot.className = `dot ${event.type}`;
+              dot.title = event.title;
+              cell.appendChild(dot);
+            });
+            cell.addEventListener("click", () => {
+              showView("calendarDetailView");
+              highlightCalendarDate(isoDate);
+            });
+          }
+          selectors.calendarGrid.appendChild(cell);
+        }
+      }
+
+      selectors.prevMonth.addEventListener("click", () => {
+        state.calendar.monthOffset -= 1;
+        renderCalendar();
+      });
+
+      selectors.nextMonth.addEventListener("click", () => {
+        state.calendar.monthOffset += 1;
+        renderCalendar();
+      });
+
+      selectors.openCalendarDetail.addEventListener("click", () => {
+        showView("calendarDetailView");
+      });
+
+      function renderBoard() {
+        selectors.boardList.innerHTML = "";
+        state.data.posts
+          .slice()
+          .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+          .forEach((post) => {
+            const article = document.createElement("article");
+            article.className = "board-item";
+            article.dataset.postId = post.id;
+            article.innerHTML = `
+              <header>
+                <h3>${post.title}</h3>
+                <span class="tag">${post.category}</span>
+              </header>
+              <p>${post.content}</p>
+              <small>${post.publishedAt} · ${post.author}</small>
+            `;
+            if (state.member?.isAdmin) {
+              const actions = document.createElement("div");
+              actions.className = "inline-actions";
+              [1, 2].forEach((slot) => {
+                const button = document.createElement("button");
+                button.className = "secondary-button";
+                button.textContent = `${slot}번 배너 지정`;
+                button.addEventListener("click", () => {
+                  state.overrides.banners[`slot${slot}`] = post.id;
+                  localStorage.setItem("vega:banners", JSON.stringify(state.overrides.banners));
+                  renderMainBanners();
+                  showMessage(`${slot}번 배너가 업데이트되었습니다.`);
+                });
+                actions.appendChild(button);
+              });
+              const resetButton = document.createElement("button");
+              resetButton.className = "ghost-button";
+              resetButton.textContent = "배너 해제";
+              resetButton.addEventListener("click", () => {
+                [1, 2].forEach((slot) => {
+                  if (state.overrides.banners[`slot${slot}`] === post.id) {
+                    delete state.overrides.banners[`slot${slot}`];
+                  }
+                });
+                localStorage.setItem("vega:banners", JSON.stringify(state.overrides.banners));
+                renderMainBanners();
+                showMessage("배너 지정이 해제되었습니다.");
+              });
+              actions.appendChild(resetButton);
+              article.appendChild(actions);
+            }
+            selectors.boardList.appendChild(article);
+          });
+      }
+
+      function renderPollList() {
+        selectors.pollList.innerHTML = "";
+        if (state.data.polls.length === 0) {
+          selectors.pollList.innerHTML = `<div class="empty-state">등록된 투표가 없습니다.</div>`;
+          return;
+        }
+        state.data.polls
+          .slice()
+          .sort((a, b) => new Date(b.deadline || `${b.year}-${b.month}-01`) - new Date(a.deadline || `${a.year}-${a.month}-01`))
+          .forEach((poll) => {
+            const item = document.createElement("article");
+            item.className = "poll-item";
+            item.innerHTML = `
+              <header>
+                <h3>${poll.title}</h3>
+                <span class="poll-status ${poll.status === "open" ? "active" : "closed"}">${
+                  poll.status === "open" ? "진행 중" : "종료"
+                }</span>
+              </header>
+              <p>${poll.description}</p>
+              <small>마감일: ${poll.deadline || "상시"}</small>
+            `;
+            const actions = document.createElement("div");
+            actions.className = "inline-actions";
+            const viewButton = document.createElement("button");
+            viewButton.className = "primary-button";
+            viewButton.textContent = poll.status === "open" ? "투표하기" : "결과 보기";
+            viewButton.addEventListener("click", () => openPollDetail(poll.id));
+            actions.appendChild(viewButton);
+            if (state.member?.isAdmin) {
+              const bannerButton = document.createElement("button");
+              bannerButton.className = "secondary-button";
+              bannerButton.textContent = poll.banner ? "배너 지정 해제" : "배너 지정";
+              bannerButton.addEventListener("click", () => {
+                poll.banner = !poll.banner;
+                persistPollOverrides();
+                renderPollHighlight();
+                renderPollList();
+                showMessage(poll.banner ? "메인 배너에 노출됩니다." : "메인 배너 노출이 해제되었습니다.");
+              });
+              actions.appendChild(bannerButton);
+            }
+            item.appendChild(actions);
+            selectors.pollList.appendChild(item);
+          });
+      }
+
+      function openPollDetail(pollId) {
+        const poll = state.data.polls.find((p) => p.id === pollId);
+        if (!poll) return;
+        showView("pollDetailView");
+        selectors.pollDetailTitle.textContent = poll.title;
+        selectors.pollDetailDescription.textContent = poll.description;
+        selectors.pollDetailStatus.textContent = poll.status === "open" ? "진행 중" : "종료";
+        selectors.pollDetailStatus.className = `poll-status ${poll.status === "open" ? "active" : "closed"}`;
+        selectors.pollVoteForm.innerHTML = "";
+        const existingVotes = state.overrides.votes[poll.id]?.[state.member?.employeeId] || [];
+        poll.options.forEach((option) => {
+          const wrapper = document.createElement("label");
+          wrapper.className = "option-card";
+          const input = document.createElement("input");
+          input.type = poll.allowMultiple ? "checkbox" : "radio";
+          input.name = "pollOption";
+          input.value = option.id;
+          if (existingVotes.includes(option.id)) {
+            input.checked = true;
+          }
+          wrapper.appendChild(input);
+          const content = document.createElement("div");
+          content.innerHTML = `<strong>${option.label}</strong>`;
+          wrapper.appendChild(content);
+          selectors.pollVoteForm.appendChild(wrapper);
+        });
+        selectors.submitVoteButton.disabled = poll.status !== "open";
+        selectors.submitVoteButton.onclick = (event) => {
+          event.preventDefault();
+          submitVote(poll);
+        };
+        selectors.viewPollResultButton.onclick = () => showPollResults(poll);
+        renderPollResults(poll);
+      }
+
+      function renderPollResults(poll) {
+        const totalVotes = poll.options.reduce((sum, option) => sum + (option.votes || 0), 0);
+        if (totalVotes === 0 && poll.status === "open") {
+          selectors.pollResults.innerHTML = "<p>투표 결과는 투표 종료 후 확인할 수 있습니다.</p>";
+          return;
+        }
+        const container = document.createElement("div");
+        container.className = "board-list";
+        poll.options.forEach((option) => {
+          const votes = option.votes || 0;
+          const percent = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
+          const card = document.createElement("article");
+          card.className = "board-item";
+          card.innerHTML = `
+            <h3>${option.label}</h3>
+            <div class="progress-bar"><span style="width: ${percent}%"></span></div>
+            <p>${numberFormatter.format(votes)}표 (${percent}%)</p>
+          `;
+          container.appendChild(card);
+        });
+        if (poll.resultSummary) {
+          const summary = document.createElement("article");
+          summary.className = "board-item";
+          summary.innerHTML = `<h3>요약</h3><p>${poll.resultSummary}</p>`;
+          container.appendChild(summary);
+        }
+        selectors.pollResults.innerHTML = "";
+        selectors.pollResults.appendChild(container);
+      }
+
+      function showPollResults(poll) {
+        renderPollResults(poll);
+        selectors.pollResults.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function submitVote(poll) {
+        if (!state.member) {
+          showMessage("로그인이 필요합니다.");
+          return;
+        }
+        if (poll.status !== "open") {
+          showMessage("이미 종료된 투표입니다.");
+          return;
+        }
+        const inputs = Array.from(selectors.pollVoteForm.querySelectorAll("input"));
+        const selected = inputs.filter((input) => input.checked).map((input) => input.value);
+        if (selected.length === 0) {
+          showMessage("선택한 항목이 없습니다.");
+          return;
+        }
+        if (!poll.allowMultiple && selected.length > 1) {
+          showMessage("중복 선택이 불가한 투표입니다.");
+          return;
+        }
+        if (!state.overrides.votes[poll.id]) {
+          state.overrides.votes[poll.id] = {};
+        }
+        const previousSelection = state.overrides.votes[poll.id][state.member.employeeId] || [];
+        poll.options.forEach((option) => {
+          if (previousSelection.includes(option.id)) {
+            option.votes = Math.max(0, (option.votes || 0) - 1);
+          }
+        });
+        selected.forEach((optionId) => {
+          const option = poll.options.find((opt) => opt.id === optionId);
+          if (option) {
+            option.votes = (option.votes || 0) + 1;
+          }
+        });
+        state.overrides.votes[poll.id][state.member.employeeId] = selected;
+        localStorage.setItem("vega:votes", JSON.stringify(state.overrides.votes));
+        persistPollOverrides();
+        renderPollResults(poll);
+        renderPollList();
+        renderCalendarEvents();
+        showMessage("투표가 저장되었습니다.");
+      }
+
+      function persistPollOverrides() {
+        state.overrides.polls = state.data.polls;
+        localStorage.setItem("vega:pollOverrides", JSON.stringify(state.data.polls));
+      }
+
+      selectors.pollFabButton.addEventListener("click", () => {
+        if (!state.member?.isAdmin) return;
+        selectors.pollForm.reset();
+        selectors.optionList.innerHTML = "";
+        addOptionField();
+        addOptionField();
+        selectors.pollDialog.showModal();
+      });
+
+      selectors.cancelPollButton.addEventListener("click", () => selectors.pollDialog.close());
+
+      selectors.addOptionButton.addEventListener("click", addOptionField);
+
+      function addOptionField() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "input-field";
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = `투표 항목`;
+        input.required = true;
+        wrapper.appendChild(input);
+        selectors.optionList.appendChild(wrapper);
+      }
+
+      selectors.pollForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const year = Number(selectors.pollYear.value);
+        const month = Number(selectors.pollMonth.value);
+        const title = selectors.pollTitleInput.value.trim();
+        const description = selectors.pollDescriptionInput.value.trim();
+        const deadline = selectors.pollDeadlineInput.value;
+        const allowMultiple = selectors.pollAllowMultiple.checked;
+        const banner = selectors.pollBannerToggle.checked;
+        const options = Array.from(selectors.optionList.querySelectorAll("input"))
+          .map((input, index) => ({
+            id: `${Date.now()}-${index}`,
+            label: input.value.trim(),
+            votes: 0
+          }))
+          .filter((option) => option.label);
+        if (!title || options.length < 2) {
+          showMessage("투표 제목과 2개 이상의 항목이 필요합니다.");
+          return;
+        }
+        const poll = {
+          id: `poll-${Date.now()}`,
+          year,
+          month,
+          title,
+          description,
+          deadline,
+          status: "open",
+          allowMultiple,
+          options,
+          resultSummary: null,
+          banner
+        };
+        state.data.polls.push(poll);
+        persistPollOverrides();
+        selectors.pollDialog.close();
+        renderPollHighlight();
+        renderPollList();
+        showMessage("새로운 투표가 생성되었습니다.");
+      });
+
+      function renderGallery() {
+        selectors.galleryGrid.innerHTML = "";
+        const galleryPosts = state.data.posts.filter((post) => post.category === "사진첩");
+        if (galleryPosts.length === 0) {
+          selectors.galleryGrid.innerHTML = `<div class="empty-state">등록된 사진첩이 없습니다.</div>`;
+          return;
+        }
+        galleryPosts.forEach((post) => {
+          const card = document.createElement("article");
+          card.className = "photo-card";
+          card.innerHTML = `
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <small>${post.publishedAt}</small>
+          `;
+          selectors.galleryGrid.appendChild(card);
+        });
+      }
+
+      function renderCalendarEvents() {
+        selectors.calendarEvents.innerHTML = "";
+        state.data.events
+          .slice()
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+          .forEach((event) => {
+            const card = document.createElement("article");
+            card.className = "board-item";
+            card.dataset.date = event.date;
+            card.innerHTML = `
+              <h3>${event.title}</h3>
+              <p>${dayFormatter.format(new Date(event.date))}</p>
+              <p>${event.description}</p>
+            `;
+            selectors.calendarEvents.appendChild(card);
+          });
+      }
+
+      function highlightCalendarDate(date) {
+        renderCalendarEvents();
+        const target = selectors.calendarEvents.querySelector(`[data-date="${date}"]`);
+        if (target) {
+          target.classList.add("highlight");
+          setTimeout(() => target.classList.remove("highlight"), 1500);
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      async function loadData() {
+        try {
+          const [members, posts, polls, notices, events] = await Promise.all([
+            fetch("data/members.json").then((res) => res.json()),
+            fetch("data/announcements.json").then((res) => res.json()),
+            fetch("data/polls.json").then((res) => res.json()),
+            fetch("data/monthly_slides.json").then((res) => res.json()),
+            fetch("data/calendar_events.json").then((res) => res.json())
+          ]);
+          state.data.members = members.members;
+          state.data.posts = posts.posts;
+          state.data.polls = Array.isArray(state.overrides.polls) && state.overrides.polls.length > 0 ? state.overrides.polls : polls.polls;
+          state.overrides.polls = state.data.polls;
+          state.data.notices = notices.notices;
+          state.data.events = events.events;
+          const lastMember = localStorage.getItem("vega:lastMember");
+          if (lastMember) {
+            state.member = JSON.parse(lastMember);
+            showView("mainView");
+            updateAfterLogin();
+          }
+        } catch (error) {
+          console.error(error);
+          showMessage("데이터를 불러오는 중 오류가 발생했습니다.");
+        }
+      }
+
+      registerViews();
+      loadData();
+    </script>
+  </body>
 </html>

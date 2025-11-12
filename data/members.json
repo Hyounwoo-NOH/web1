@@ -1,0 +1,8 @@
+{
+  "members": [
+    { "employeeId": "VG001", "nickname": "VEGA", "displayName": "김관리", "isAdmin": true },
+    { "employeeId": "VG002", "nickname": "EAGLE", "displayName": "박회원", "isAdmin": false },
+    { "employeeId": "VG003", "nickname": "BIRDIE", "displayName": "이회원", "isAdmin": false },
+    { "employeeId": "VG004", "nickname": "ALBATROSS", "displayName": "최회원", "isAdmin": false }
+  ]
+}

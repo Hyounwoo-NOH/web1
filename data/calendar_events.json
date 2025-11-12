@@ -1,0 +1,18 @@
+{
+  "events": [
+    {
+      "id": "2023-11-round",
+      "date": "2023-11-18",
+      "title": "11월 정기 라운드",
+      "type": "vote-result",
+      "description": "11월 정기 라운드 일정입니다. 티오프 08:00, 장소: 스카이뷰 C.C"
+    },
+    {
+      "id": "2023-12-vote-deadline",
+      "date": "2023-12-08",
+      "title": "12월 일정 투표 마감",
+      "type": "deadline",
+      "description": "12월 송년 라운드 일정 투표 마감일입니다."
+    }
+  ]
+}
